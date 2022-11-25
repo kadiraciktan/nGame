@@ -12,4 +12,8 @@ export const sceneImages = {
     key: 'bullet',
     path: 'assets/bullet.png',
   },
+  batwing: {
+    key: 'bat',
+    path: 'assets/batwing.png',
+  },
 };

@@ -38,6 +38,10 @@ export class PlayerController {
       this.body.setVelocityY(0);
     }
 
+    if (this.keys[1].isDown) {
+      this.body.setTexture(sceneImages.player.key, 1);
+    }
+
     const angle =
       Phaser.Math.Angle.Between(
         this.body.x,
