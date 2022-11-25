@@ -1,12 +1,22 @@
+import { Component } from '@angular/core';
 import { KeyboardController, KeyboardKeys } from 'src/app/common';
 import { PlayerController } from 'src/app/prefabs/player.controller';
+import { deneme } from 'src/app/services/game.service';
 import { sceneImages } from './constants/scene.images';
-
+@Component({
+  selector: 'app-game-scene',
+  template: '',
+  styles: [''],
+})
 export class GameScene extends Phaser.Scene {
   player: PlayerController;
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
   keys: KeyboardKeys;
   movementSpeed = 80;
+  userName: string;
+
+  userNameText: Phaser.GameObjects.Text;
+
   constructor() {
     super('SceneMain');
   }
@@ -29,6 +39,15 @@ export class GameScene extends Phaser.Scene {
   create() {
     this.add.tileSprite(0, 0, 800, 600, sceneImages.dust.key).setOrigin(0, 0);
     this.player = new PlayerController(this);
+    this.userNameText = this.add
+      .text(this.player.body.x, this.player.body.y, '', {
+        color: 'white',
+        fontSize: '15px',
+      })
+      .setOrigin(0.5, -1.5);
+    deneme.subscribe((data) => {
+      this.userNameText.setText(data);
+    });
 
     // this.player = this.physics.add.sprite(100, 450, sceneImages.player.key);
     // this.player.setCollideWorldBounds(true);
@@ -53,6 +72,11 @@ export class GameScene extends Phaser.Scene {
 
   override update(time: number, deltaTime: number) {
     this.player.setPlayerMovement();
+
+    //  text move to pos
+    if (this.userNameText) {
+      this.userNameText.setPosition(this.player.body.x, this.player.body.y);
+    }
 
     //if mouse is down
     if (this.input.activePointer.isDown) {

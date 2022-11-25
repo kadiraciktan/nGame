@@ -7,12 +7,14 @@ export class PlayerController {
   keys: KeyboardKeys;
   movementSpeed = 80;
   currentHandState: 'empty' | 'right' | 'left' | 'both' = 'empty';
+  isGamePaused = false;
 
   constructor(public scene: Phaser.Scene) {
     this.keys = new KeyboardController(scene).keys;
     this.body = scene.physics.add.sprite(100, 450, sceneImages.player.key);
     this.body.setCollideWorldBounds(true);
     this.body.setDrag(0.99);
+    this.scene.input.keyboard.clearCaptures();
   }
 
   setPlayerMovement() {
@@ -46,5 +48,20 @@ export class PlayerController {
       Math.PI / 2;
 
     this.body.setRotation(angle);
+
+    // if (this.keys.ESC.isDown) {
+    //   this.keys.ESC.isDown = false;
+    //   console.log('ESC is up');
+    //   this.isGamePaused = !this.isGamePaused;
+
+    //   console.log('this.isGamePaused', this.isGamePaused);
+
+    //   if (this.isGamePaused) {
+    //   }
+
+    //   if (!this.isGamePaused) {
+    //     this.scene.input.keyboard.enabled = true;
+    //   }
+    // }
   }
 }

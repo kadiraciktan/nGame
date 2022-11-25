@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
+import { UntypedFormControl } from '@angular/forms';
 import * as Phaser from 'phaser';
 import { GameScene } from '../scenes/game-scene/game.scene';
 import { TestSceneComponent } from '../scenes/test-scene/test-scene.component';
+import { GameService } from '../services/game.service';
+
+import { deneme } from '../services/game.service';
 
 @Component({
   selector: 'app-game-canvas',
@@ -11,7 +15,9 @@ import { TestSceneComponent } from '../scenes/test-scene/test-scene.component';
 export class GameCanvasComponent {
   phaserGame: Phaser.Game;
   config: Phaser.Types.Core.GameConfig;
-  constructor() {
+  userNameControl = new UntypedFormControl('');
+
+  constructor(private gameService: GameService) {
     this.config = {
       type: Phaser.AUTO,
 
@@ -29,6 +35,10 @@ export class GameCanvasComponent {
         height: 600,
       },
     };
+
+    this.userNameControl.valueChanges.subscribe((userName) => {
+      deneme.next(userName);
+    });
   }
   ngOnInit() {
     this.phaserGame = new Phaser.Game(this.config);

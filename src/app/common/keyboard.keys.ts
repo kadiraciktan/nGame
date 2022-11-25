@@ -4,6 +4,7 @@ export interface KeyboardKeys {
   S: Phaser.Input.Keyboard.Key;
   D: Phaser.Input.Keyboard.Key;
   1: Phaser.Input.Keyboard.Key;
+  ESC: Phaser.Input.Keyboard.Key;
 }
 export class KeyboardController extends Phaser.Input.InputPlugin {
   keys: KeyboardKeys;
@@ -15,6 +16,7 @@ export class KeyboardController extends Phaser.Input.InputPlugin {
       S: scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
       D: scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
       1: scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE),
+      ESC: scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC),
     };
   }
 }
