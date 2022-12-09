@@ -8,13 +8,23 @@ export class PlayerController {
   movementSpeed = 80;
   currentHandState: 'empty' | 'right' | 'left' | 'both' = 'empty';
   isGamePaused = false;
+  // gameObject: Phaser.GameObjects.Group;
+  container: Phaser.GameObjects.Container;
+  currentWeapon: Phaser.GameObjects.Sprite;
 
   constructor(public scene: Phaser.Scene) {
     this.keys = new KeyboardController(scene).keys;
     this.body = scene.physics.add.sprite(100, 450, sceneImages.player.key);
+    this.container = this.scene.add.container(32, 32);
+
+    const text = this.scene.add.text(10, 10, 'Phaser');
+    const ak47 = scene.physics.add.sprite(0, 0, sceneImages.weapons.ak47.key);
+    ak47.setOrigin(0.5, 1);
     this.body.setCollideWorldBounds(true);
     this.body.setDrag(0.99);
     this.scene.input.keyboard.clearCaptures();
+
+    this.container.add([ak47,text]);
   }
 
   setPlayerMovement() {
@@ -52,6 +62,9 @@ export class PlayerController {
       Math.PI / 2;
 
     this.body.setRotation(angle);
+
+    this.container.setPosition(this.body.x, this.body.y);
+    this.container.setRotation(angle);
 
     // if (this.keys.ESC.isDown) {
     //   this.keys.ESC.isDown = false;

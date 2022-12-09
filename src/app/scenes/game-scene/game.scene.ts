@@ -38,7 +38,10 @@ export class GameScene extends Phaser.Scene {
       frameWidth: 48,
       frameHeight: 40,
     });
-
+    this.load.image(
+      sceneImages.weapons.ak47.key,
+      sceneImages.weapons.ak47.path
+    );
     this.keys = keyboardController.keys;
   }
 
@@ -46,6 +49,7 @@ export class GameScene extends Phaser.Scene {
   create() {
     this.add.tileSprite(0, 0, 800, 600, sceneImages.dust.key).setOrigin(0, 0);
     this.player = new PlayerController(this);
+
     this.userNameText = this.add
       .text(this.player.body.x, this.player.body.y, '', {
         color: 'white',
@@ -70,6 +74,12 @@ export class GameScene extends Phaser.Scene {
 
     this.enemy.play('fly');
 
+    this.enemy.setCollideWorldBounds(true);
+
+    this.enemy.setVelocityX(100);
+    this.enemy.setVelocityY(100);
+
+    this.enemy.setBounce(1, 1);
 
     // this.player = this.physics.add.sprite(100, 450, sceneImages.player.key);
     // this.player.setCollideWorldBounds(true);
@@ -107,7 +117,7 @@ export class GameScene extends Phaser.Scene {
         //fire bullet
         this.lastFired = time + this.fireRate;
         //shake screen
-        // this.cameras.main.shake(30, 0.01);
+        this.cameras.main.shake(30, 0.01);
 
         //create bullet
         const bullet = this.physics.add.sprite(
@@ -131,20 +141,20 @@ export class GameScene extends Phaser.Scene {
           Math.PI / 2;
 
         // bullet  trail particles emitter
-        const particles = this.add.particles(sceneImages.bullet.key);
-        const emitter = particles.createEmitter({
-          x: this.player.body.x,
-          y: this.player.body.y,
-          speed: 100,
-          angle: {
-            min: this.input.activePointer.worldX,
-            max: this.input.activePointer.worldY,
-          },
-          scale: { start: 0.5, end: 5 },
-          blendMode: 'ADD',
-        });
+        // const particles = this.add.particles(sceneImages.bullet.key);
+        // const emitter = particles.createEmitter({
+        //   x: this.player.body.x,
+        //   y: this.player.body.y,
+        //   speed: 100,
+        //   angle: {
+        //     min: this.input.activePointer.worldX,
+        //     max: this.input.activePointer.worldY,
+        //   },
+        //   scale: { start: 0.5, end: 5 },
+        //   blendMode: 'ADD',
+        // });
 
-        // draw raycast line
+        // //draw raycast line
         // const graphics = this.add.graphics();
         // graphics.lineStyle(2, 0xffffff, 1);
         // graphics.beginPath();
@@ -168,8 +178,8 @@ export class GameScene extends Phaser.Scene {
           if (body.gameObject === bullet) {
             //remove particles
 
-            emitter.stop();
-            particles.destroy();
+            // emitter.stop();
+            // particles.destroy();
             bullet.destroy();
             // graphics.destroy();
           }

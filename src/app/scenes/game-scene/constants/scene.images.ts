@@ -16,4 +16,10 @@ export const sceneImages = {
     key: 'bat',
     path: 'assets/batwing.png',
   },
+  weapons: {
+    ak47: {
+      key: 'ak47',
+      path: 'assets/weapons/ak47.png',
+    },
+  },
 };
