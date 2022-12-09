@@ -1,5 +1,5 @@
 import { KeyboardController, KeyboardKeys } from '../common';
-import { WeaponInterface } from '../common/weapon';
+import { WeaponClass } from '../common/weapon';
 import { PlayerWeaponController } from '../controllers/player-weapon.controller';
 import { sceneImages } from '../scenes/game-scene/constants/scene.images';
 import { WeaponAk47 } from '../weapons/weapon-ak47';
@@ -13,13 +13,29 @@ export class PlayerController {
   isGamePaused = false;
   // gameObject: Phaser.GameObjects.Group;
   container: Phaser.GameObjects.Container;
-  currentWeapon: WeaponInterface;
+  currentWeapon: WeaponClass;
 
-  constructor(public scene: Phaser.Scene) {
-    this.keys = new KeyboardController(scene).keys;
-    this.body = scene.physics.add.sprite(100, 450, sceneImages.player.key);
-    //    this.container = this.scene.add.container(32, 32);
+  constructor(public scene: Phaser.Scene) {}
 
+  preload() {
+    this.scene.load.spritesheet(
+      sceneImages.player.key,
+      sceneImages.player.path,
+      {
+        frameWidth: 32,
+        frameHeight: 32,
+      }
+    );
+    this.scene.load.image(sceneImages.bullet.key, sceneImages.bullet.path);
+    this.scene.load.image(
+      sceneImages.weapons.ak47.key,
+      sceneImages.weapons.ak47.path
+    );
+  }
+
+  create() {
+    this.keys = new KeyboardController(this.scene).keys;
+    this.body = this.scene.physics.add.sprite(100, 450, sceneImages.player.key);
     this.currentWeapon = new WeaponAk47(this);
     this.body.setCollideWorldBounds(true);
     this.body.setDrag(0.99);
@@ -28,6 +44,9 @@ export class PlayerController {
 
   update() {
     this.setPlayerMovement();
+    if (this.scene.input.activePointer.isDown) {
+      this.currentWeapon.fireWeapon();
+    }
   }
 
   setPlayerMovement() {

@@ -9,14 +9,12 @@ import { sceneImages } from './constants/scene.images';
   styles: [''],
 })
 export class GameScene extends Phaser.Scene {
-  player: PlayerController;
+  player: PlayerController = new PlayerController(this);
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
   keys: KeyboardKeys;
   movementSpeed = 80;
   userName: string;
-
   userNameText: Phaser.GameObjects.Text;
-
   enemy: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
 
   constructor() {
@@ -28,27 +26,19 @@ export class GameScene extends Phaser.Scene {
   // Load Actions Here
   preload() {
     const keyboardController = new KeyboardController(this);
+    this.player.preload();
     this.load.image(sceneImages.dust.key, sceneImages.dust.path);
-    this.load.spritesheet(sceneImages.player.key, sceneImages.player.path, {
-      frameWidth: 32,
-      frameHeight: 32,
-    });
-    this.load.image(sceneImages.bullet.key, sceneImages.bullet.path);
     this.load.spritesheet(sceneImages.batwing.key, sceneImages.batwing.path, {
       frameWidth: 48,
       frameHeight: 40,
     });
-    this.load.image(
-      sceneImages.weapons.ak47.key,
-      sceneImages.weapons.ak47.path
-    );
     this.keys = keyboardController.keys;
   }
 
   // Add Actions Here
   create() {
     this.add.tileSprite(0, 0, 800, 600, sceneImages.dust.key).setOrigin(0, 0);
-    this.player = new PlayerController(this);
+    this.player.create();
 
     this.userNameText = this.add
       .text(this.player.body.x, this.player.body.y, '', {
