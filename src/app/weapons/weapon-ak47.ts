@@ -5,14 +5,17 @@ import { sceneImages } from '../scenes/game-scene/constants/scene.images';
 
 export class WeaponAk47 extends WeaponClass {
   constructor(player: PlayerController) {
-    super(player);
-    this.name = 'AK47';
-    this.fireRate = 250;
-    this.damage = 10;
-    this.bulletSpeed = 1000;
-    this.reloadTime = 1000;
-    this.ammoCap = 30;
-    this.currentAmmo = 30;
-    this.maxAmmo = 90;
+    super(
+      player, // player
+      'AK47', // weapon name
+      100, // fire rate
+      10, // damage
+      100, // bullet speed
+      new Phaser.Math.Vector2(1, -16),
+      2500, // reload time
+      30, // ammo cap
+      30, // current ammo
+      90 // max ammo
+    );
   }
 }

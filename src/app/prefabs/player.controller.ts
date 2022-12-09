@@ -14,6 +14,7 @@ export class PlayerController {
   // gameObject: Phaser.GameObjects.Group;
   container: Phaser.GameObjects.Container;
   currentWeapon: WeaponClass;
+  currentAngle: number;
 
   constructor(public scene: Phaser.Scene) {}
 
@@ -74,7 +75,7 @@ export class PlayerController {
       this.body.setTexture(sceneImages.player.key, 1);
     }
 
-    const angle =
+    this.currentAngle =
       Phaser.Math.Angle.Between(
         this.body.x,
         this.body.y,
@@ -83,9 +84,9 @@ export class PlayerController {
       ) +
       Math.PI / 2;
 
-    this.body.setRotation(angle);
+    this.body.setRotation(this.currentAngle);
 
-    this.currentWeaponSetPosition(angle);
+    this.currentWeaponSetPosition(this.currentAngle);
 
     // if (this.keys.ESC.isDown) {
     //   this.keys.ESC.isDown = false;
