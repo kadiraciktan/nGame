@@ -1,5 +1,8 @@
 import { KeyboardController, KeyboardKeys } from '../common';
+import { WeaponInterface } from '../common/weapon';
+import { PlayerWeaponController } from '../controllers/player-weapon.controller';
 import { sceneImages } from '../scenes/game-scene/constants/scene.images';
+import { WeaponAk47 } from '../weapons/weapon-ak47';
 
 export class PlayerController {
   body: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
@@ -10,21 +13,21 @@ export class PlayerController {
   isGamePaused = false;
   // gameObject: Phaser.GameObjects.Group;
   container: Phaser.GameObjects.Container;
-  currentWeapon: Phaser.GameObjects.Sprite;
+  currentWeapon: WeaponInterface;
 
   constructor(public scene: Phaser.Scene) {
     this.keys = new KeyboardController(scene).keys;
     this.body = scene.physics.add.sprite(100, 450, sceneImages.player.key);
-    this.container = this.scene.add.container(32, 32);
+    //    this.container = this.scene.add.container(32, 32);
 
-    const text = this.scene.add.text(10, 10, 'Phaser');
-    const ak47 = scene.physics.add.sprite(0, 0, sceneImages.weapons.ak47.key);
-    ak47.setOrigin(0.5, 1);
+    this.currentWeapon = new WeaponAk47(this);
     this.body.setCollideWorldBounds(true);
     this.body.setDrag(0.99);
     this.scene.input.keyboard.clearCaptures();
+  }
 
-    this.container.add([ak47,text]);
+  update() {
+    this.setPlayerMovement();
   }
 
   setPlayerMovement() {
@@ -63,8 +66,7 @@ export class PlayerController {
 
     this.body.setRotation(angle);
 
-    this.container.setPosition(this.body.x, this.body.y);
-    this.container.setRotation(angle);
+    this.currentWeaponSetPosition(angle);
 
     // if (this.keys.ESC.isDown) {
     //   this.keys.ESC.isDown = false;
@@ -80,5 +82,10 @@ export class PlayerController {
     //     this.scene.input.keyboard.enabled = true;
     //   }
     // }
+  }
+
+  currentWeaponSetPosition(angle: number = 0) {
+    this.currentWeapon.weaponContainer.setPosition(this.body.x, this.body.y);
+    this.currentWeapon.weaponContainer.setRotation(angle);
   }
 }

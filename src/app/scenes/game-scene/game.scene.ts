@@ -103,7 +103,7 @@ export class GameScene extends Phaser.Scene {
   //update delta time
 
   override update(time: number, deltaTime: number) {
-    this.player.setPlayerMovement();
+    this.player.update();
 
     //  text move to pos
     if (this.userNameText) {
