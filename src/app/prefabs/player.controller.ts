@@ -72,7 +72,7 @@ export class PlayerController {
     }
 
     if (this.keys[1].isDown) {
-      this.body.setTexture(sceneImages.player.key, 1);
+      this.body.setTexture(sceneImages.player.key, 2);
     }
 
     this.currentAngle =

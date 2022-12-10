@@ -61,6 +61,7 @@ export class WeaponClass {
         if (isReloading) {
           this.currentAmmo = this.ammoCap;
           this.setAmmoText();
+          this.reload.next(false);
         }
       });
 
