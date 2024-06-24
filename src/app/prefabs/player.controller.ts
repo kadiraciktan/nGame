@@ -40,6 +40,7 @@ export class PlayerController {
     this.currentWeapon = new WeaponAk47(this);
     this.body.setCollideWorldBounds(true);
     this.body.setDrag(0.99);
+    this.body.setTexture(sceneImages.player.key, 2);
     this.scene.input.keyboard.clearCaptures();
   }
 

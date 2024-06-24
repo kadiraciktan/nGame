@@ -107,7 +107,7 @@ export class GameScene extends Phaser.Scene {
         //fire bullet
         this.lastFired = time + this.fireRate;
         //shake screen
-        this.cameras.main.shake(30, 0.01);
+        this.cameras.main.shake(30, 0.004);
 
         //create bullet
         const bullet = this.physics.add.sprite(
